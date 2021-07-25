@@ -25,15 +25,17 @@ const appIconPngBase64 = `iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAAAXNSR0
 const apiServerHost = `192.168.1.3:8080`
 
 func main() {
-	a := app.NewWithID("fyne authentication demo")
-	a.SetIcon(getStaticResource(appIconPngBase64))
-	w := a.NewWindow("Authentication Demo")
+	thisApp := app.NewWithID("fyne authentication demo")
+	thisApp.SetIcon(getStaticResource(appIconPngBase64))
+	window := thisApp.NewWindow("Authentication Demo")
 
 	form, username := getLogonForm()
-	w.SetContent(form)
-	w.Resize(fyne.NewSize(640, w.Canvas().Size().Height))
-	w.Canvas().Focus(username)
-	w.ShowAndRun()
+	window.SetContent(form)
+	window.Resize(fyne.NewSize(640, window.Canvas().Size().Height))
+
+	window.Canvas().Focus(username)
+	thisApp.Settings().SetTheme(theme.DarkTheme())
+	window.ShowAndRun()
 }
 
 func getStaticResource(imgData string) *fyne.StaticResource {
@@ -78,11 +80,6 @@ func getLogonForm() (*fyne.Container, *widget.Entry) {
 			fmt.Println("Cancelled")
 		},
 		OnSubmit: func() {
-			fyne.CurrentApp().SendNotification(&fyne.Notification{
-				Title:   username.Text,
-				Content: password.Text,
-			})
-
 			user, response, err := attemptAuth(username.Text, password.Text)
 			handleAuthResponse(username.Text, user, response, err, info, infoPanel)
 		},
@@ -94,7 +91,12 @@ func getLogonForm() (*fyne.Container, *widget.Entry) {
 
 	content := container.NewVBox(apiEndpointLabel, form, infoPanel)
 
-	return container.NewBorder(nil, bottom, left, right, content), username
+	if fyne.CurrentDevice().IsMobile() {
+		return content, username
+	} else {
+		return container.NewBorder(nil, bottom, left, right, content), username
+	}
+
 }
 
 func newBorderSpacer() fyne.CanvasObject {
@@ -114,11 +116,11 @@ func attemptAuth(username, password string) (*client.ExistingUserAccount, *http.
 	apiClient := client.NewAPIClient(configuration)
 	resp, r, err := apiClient.AuthAPIApi.AuthenticateUser(context.Background()).UserCredentials(credentials).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPIApi.AuthenticateUser``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+		_, _ = fmt.Fprintf(os.Stderr, "Error when calling `AuthAPIApi.AuthenticateUser``: %v\n", err)
+		_, _ = fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 		return nil, r, err
 	}
-	fmt.Fprintf(os.Stdout, "Response from `AuthAPIApi.AuthenticateUser`: %v\n", resp)
+	_, _ = fmt.Fprintf(os.Stdout, "Response from `AuthAPIApi.AuthenticateUser`: %v\n", resp)
 	return &resp, r, nil
 }
 
@@ -137,6 +139,11 @@ func handleAuthResponse(
 		if user.Authenticated {
 			info.SetText(fmt.Sprintf("authenticated '%s'\nuserId: %v", username, user.Id))
 			infoPanel.Show()
+
+			fyne.CurrentApp().SendNotification(&fyne.Notification{
+				Title:   "Auth demo",
+				Content: fmt.Sprintf("authenticated '%s'!\nuserId: %v", username, user.Id),
+			})
 		} else {
 			info.SetText(fmt.Sprintf("failed to authenticate '%s'\nresponse: %v", username, response))
 			infoPanel.Show()
