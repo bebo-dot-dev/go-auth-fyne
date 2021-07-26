@@ -12,7 +12,7 @@ import (
 	"fyne.io/fyne/v2/data/validation"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"github.com/bebo-dot-dev/go-auth-api-v2/client"
+	"github.com/bebo-dot-dev/go-auth-api/client"
 	"image/color"
 	"image/png"
 	"log"

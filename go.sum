@@ -37,8 +37,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/Kodeworks/golang-image-ico v0.0.0-20141118225523-73f0f4cfade9/go.mod h1:7uhhqiBaR4CpN0k9rMjOtjpcfGd6DG2m04zQxKnWQ0I=
 github.com/akavel/rsrc v0.8.0/go.mod h1:uLoCtb9J+EyAqh+26kdrTgmzRBFPGOolLWKpdxkKq+c=
-github.com/bebo-dot-dev/go-auth-api-v2/client v0.0.0-20210725081005-951a656f572f h1:VfWdG2R0nX6hpCAdIvIVpIPOSYYc4vJ3yM9MT82t/R8=
-github.com/bebo-dot-dev/go-auth-api-v2/client v0.0.0-20210725081005-951a656f572f/go.mod h1:zLUErL0Brs9pXMHiVivE9CRcMgjo8jFbnTA0QJAzDbc=
+github.com/bebo-dot-dev/go-auth-api/client v0.0.0-20210726075120-ef58b00d88f9 h1:ztYxciDflXFAGdz5Y0T+nuwUcZmMQASfbodSnxeOBqU=
+github.com/bebo-dot-dev/go-auth-api/client v0.0.0-20210726075120-ef58b00d88f9/go.mod h1:8x16/+iaJ3ceVx3dtW862Q8FIgXZ0yepVa/Wf3CVjdE=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
