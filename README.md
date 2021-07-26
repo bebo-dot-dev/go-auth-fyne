@@ -10,4 +10,4 @@ This app has been cross compiled to [linux](https://github.com/bebo-dot-dev/go-a
 `go build main.go`
 
 ## video
-![files](./android/screen-20210725-145901.gif)
+![files](./android/20210727_195444.gif)
