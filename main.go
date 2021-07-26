@@ -77,6 +77,7 @@ func getLogonForm() (*fyne.Container, *widget.Entry) {
 		OnCancel: func() {
 			username.SetText("")
 			password.SetText("")
+			infoPanel.Hide()
 			fmt.Println("Cancelled")
 		},
 		OnSubmit: func() {
@@ -84,16 +85,16 @@ func getLogonForm() (*fyne.Container, *widget.Entry) {
 			handleAuthResponse(username.Text, user, response, err, info, infoPanel)
 		},
 	}
-
-	bottom := newBorderSpacer()
-	left := newBorderSpacer()
-	right := newBorderSpacer()
-
-	content := container.NewVBox(apiEndpointLabel, form, infoPanel)
+	
+	grid := container.NewGridWithColumns(1, form, infoPanel)
+	content := container.NewVBox(apiEndpointLabel, grid)
 
 	if fyne.CurrentDevice().IsMobile() {
 		return content, username
 	} else {
+		bottom := newBorderSpacer()
+		left := newBorderSpacer()
+		right := newBorderSpacer()
 		return container.NewBorder(nil, bottom, left, right, content), username
 	}
 
